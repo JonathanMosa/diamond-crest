@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator animator;
+
     [Header("Ground Move")]
     public float moveSpeed = 3.5f;
 
@@ -17,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     // runtime
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private bool isGrounded = false;
     private bool isCharging = false;
     private bool jumpRequest = false;
@@ -34,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         RecomputeJumpImpulses();
     }
 
@@ -55,8 +59,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
         float xRaw = Input.GetAxisRaw("Horizontal");
+
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        animator.SetBool("IsGrounded", isGrounded);
+        animator.SetFloat("YVel", rb.velocity.y);
+
         if (Mathf.Abs(xRaw) > 0.01f) facing = xRaw > 0 ? 1 : -1;
+
+        // Flip sprite visually
+        if (sr) sr.flipX = (facing < 0);
 
         // begin charge only if grounded
         if (!isCharging && isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -135,6 +148,9 @@ public class PlayerMovement : MonoBehaviour
             // clean takeoff
             rb.velocity = Vector2.zero;
 
+            // animator jump
+            animator.SetBool("IsJumping", true);
+
             // single impulse
             rb.AddForce(new Vector2(vx, vy), ForceMode2D.Impulse);
 
@@ -148,11 +164,22 @@ public class PlayerMovement : MonoBehaviour
     // Simple tag-based ground detection
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            OnLanding();
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) isGrounded = false;
     }
+
+    // Detect Landing for Animation
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
+    }
+
 }

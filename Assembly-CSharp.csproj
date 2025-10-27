@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\WindScript.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\BubbleOrb.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
