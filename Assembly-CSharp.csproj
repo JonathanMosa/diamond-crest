@@ -72,7 +72,10 @@
     <Compile Include="Assets\Scripts\BubbleOrb.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Free Pixel Art overworld tileset\readme.txt" />
+    <None Include="Assets\Free Pixel Art overworld tileset\contact.txt" />
     <None Include="Assets\War\Slime Enemy - Pixel Art\README.txt" />
+    <None Include="Assets\Free Pixel Art overworld tileset\Lisense.txt" />
     <None Include="Assets\Foozle_2DT0007_Cave_and_Desert_Tileset_Pixel_Art\Readme.txt" />
   </ItemGroup>
   <ItemGroup>
