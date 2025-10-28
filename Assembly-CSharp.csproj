@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\WindScript.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\SlimePatrol.cs" />
     <Compile Include="Assets\Scripts\BubbleOrb.cs" />
   </ItemGroup>
   <ItemGroup>
