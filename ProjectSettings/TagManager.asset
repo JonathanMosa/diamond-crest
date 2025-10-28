@@ -42,17 +42,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: SkyBG
-    uniqueID: 1234566551
+  - name: Void
+    uniqueID: 4180563669
     locked: 0
-  - name: BG2_Parallax
-    uniqueID: 2415691605
+  - name: BG4_Far
+    uniqueID: 79833763
     locked: 0
-  - name: BG1_Walls
-    uniqueID: 4084306981
+  - name: BG3
+    uniqueID: 4172236967
     locked: 0
-  - name: Mid_Decor
-    uniqueID: 810914993
+  - name: BG2
+    uniqueID: 2793303753
+    locked: 0
+  - name: BG1_Near
+    uniqueID: 1105061607
     locked: 0
   - name: Ground
     uniqueID: 2803132661
@@ -62,4 +65,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1074310075
+    locked: 0
+  - name: Player
+    uniqueID: 57463001
     locked: 0

@@ -70,6 +70,10 @@
     <Compile Include="Assets\Scripts\BubbleOrb.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\War\Slime Enemy - Pixel Art\README.txt" />
+    <None Include="Assets\Foozle_2DT0007_Cave_and_Desert_Tileset_Pixel_Art\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2022.3.17f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
       <Private>False</Private>
