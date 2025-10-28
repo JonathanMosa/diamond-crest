@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class SlimePatrol_Hardcoded : MonoBehaviour
 {
-    public Transform rightBound;    // assign the right edge object
-    public Transform sprite;        // assign your slime sprite child
+    public Transform rightBound;    // right edge of patrol
+    public Transform sprite;        // slime sprite
     public float speed = 1.5f;
-    public float patrolDistance = 6f; // total width in tiles (6 units if 1 tile = 1 unit)
+    public float patrolDistance = 6f; 
+    public float knockbackForce = 8f; // how strong the hit is
 
     private Rigidbody2D rb;
-    private int dir = 1;            // 1 = right, -1 = left
-    private float leftX;            // computed from rightBound
+    private int dir = 1;            
+    private float leftX;            
     private float rightX;
 
     void Start()
@@ -17,9 +18,8 @@ public class SlimePatrol_Hardcoded : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (sprite == null) sprite = transform;
 
-        // left and right computation
         rightX = rightBound.position.x;
-        leftX = rightX - patrolDistance;  // 6 tiles to the left
+        leftX = rightX - patrolDistance;
     }
 
     void FixedUpdate()
@@ -34,10 +34,25 @@ public class SlimePatrol_Hardcoded : MonoBehaviour
                 sprite.localScale.z
             );
 
-        // flip direction at bounds
+        // turn at bounds
         if (transform.position.x >= rightX && dir > 0)
             dir = -1;
         else if (transform.position.x <= leftX && dir < 0)
             dir = 1;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody2D playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (playerRb != null)
+            {
+                // get direction away from slime
+                float direction = collision.transform.position.x > transform.position.x ? 1f : -1f;
+                Vector2 knock = new Vector2(direction * knockbackForce, knockbackForce / 2f);
+                playerRb.AddForce(knock, ForceMode2D.Impulse);
+            }
+        }
     }
 }
