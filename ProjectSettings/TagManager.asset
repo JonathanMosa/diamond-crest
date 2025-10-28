@@ -45,6 +45,9 @@ TagManager:
   - name: Void
     uniqueID: 4180563669
     locked: 0
+  - name: BG5_Farther
+    uniqueID: 1843382315
+    locked: 0
   - name: BG4_Far
     uniqueID: 79833763
     locked: 0
