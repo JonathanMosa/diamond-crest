@@ -15,7 +15,13 @@ public class PlayerMovement : MonoBehaviour
     public float targetMaxHeight = 3.0f;               // max height at full charge
     public float minHeight = 0.8f;                      // height on quick tap
     public float maxHorizImpulse = 6f;                  // horizontal at full charge
-    public float airControl = 0f;                       // 0 = true Jump-King feel
+    public float airControl = 0f;   
+
+    private AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip landSound;
+    private bool wasGrounded;
+                   
 
     // runtime
     private Rigidbody2D rb;
@@ -25,12 +31,11 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpRequest = false;
     private float chargeTimer = 0f;
 
-    // direction + intent
     private int facing = 1;             // last seen direction from ground input
-    private int chargeDir = 0;          // -1, 0, +1 chosen during charge (0 = vertical only)
+    private int chargeDir = 0;          // -1, 0, +1 chosen during charge
     private bool horizDuringCharge = false;
 
-    // derived impulses from height targets
+    // impulses
     private float minJumpImpulse;
     private float maxJumpImpulse;
 
@@ -38,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         RecomputeJumpImpulses();
     }
 
@@ -128,14 +134,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Air control (usually 0 for Jump-King style)
+            // Air control
             float targetX = x * moveSpeed;
             rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, targetX, airControl), rb.velocity.y);
         }
 
         if (jumpRequest)
         {
-            // compute charge fraction → curve
+            // compute charge 
             float t = Mathf.Clamp01(chargeTimer / maxChargeTime);
             float k = chargeCurve.Evaluate(t);
 
@@ -145,11 +151,13 @@ public class PlayerMovement : MonoBehaviour
             // horizontal ONLY if A/D was held during charge; else vertical jump
             float vx = horizDuringCharge ? Mathf.Lerp(0f, maxHorizImpulse, k) * (chargeDir != 0 ? chargeDir : facing) : 0f;
 
-            // clean takeoff
+            // takeoff
             rb.velocity = Vector2.zero;
 
             // animator jump
             animator.SetBool("IsJumping", true);
+
+            if (audioSource && jumpSound) audioSource.PlayOneShot(jumpSound);
 
             // single impulse
             rb.AddForce(new Vector2(vx, vy), ForceMode2D.Impulse);
@@ -161,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Simple tag-based ground detection
+    // Ground detection
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -180,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnLanding()
     {
         animator.SetBool("IsJumping", false);
+        if (audioSource && landSound) audioSource.PlayOneShot(landSound);
     }
 
 }

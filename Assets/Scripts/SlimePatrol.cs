@@ -5,8 +5,12 @@ public class SlimePatrol_Hardcoded : MonoBehaviour
     public Transform rightBound;    // right edge of patrol
     public Transform sprite;        // slime sprite
     public float speed = 1.5f;
-    public float patrolDistance = 6f; 
+    public float patrolDistance = 6f;
     public float knockbackForce = 8f; // how strong the hit is
+    
+    private AudioSource audioSource;
+    public AudioClip hitSound;
+
 
     private Rigidbody2D rb;
     private int dir = 1;            
@@ -15,6 +19,8 @@ public class SlimePatrol_Hardcoded : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         rb = GetComponent<Rigidbody2D>();
         if (sprite == null) sprite = transform;
 
@@ -54,5 +60,8 @@ public class SlimePatrol_Hardcoded : MonoBehaviour
                 playerRb.AddForce(knock, ForceMode2D.Impulse);
             }
         }
+        if (audioSource && hitSound)
+            audioSource.PlayOneShot(hitSound);
+
     }
 }

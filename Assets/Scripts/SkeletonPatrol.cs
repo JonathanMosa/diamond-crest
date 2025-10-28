@@ -8,6 +8,9 @@ public class SkeletonPatrol_Hardcoded : MonoBehaviour
     public float patrolDistance = 3f; // 3 tiles
     public float knockbackForce = 7f; // how strong the hit is
 
+    private AudioSource audioSource;
+    public AudioClip hitSound;
+
     private Rigidbody2D rb;
     private int dir = 1;
     private float leftX;
@@ -17,6 +20,7 @@ public class SkeletonPatrol_Hardcoded : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         if (sprite == null) sprite = transform;
+        audioSource = GetComponent<AudioSource>();
 
         rightX = rightBound.position.x;
         leftX = rightX - patrolDistance;
@@ -53,6 +57,9 @@ public class SkeletonPatrol_Hardcoded : MonoBehaviour
                 Vector2 knock = new Vector2(direction * knockbackForce, knockbackForce / 2f);
                 playerRb.AddForce(knock, ForceMode2D.Impulse);
             }
+
+            if (audioSource && hitSound)
+                audioSource.PlayOneShot(hitSound);
         }
     }
 }
