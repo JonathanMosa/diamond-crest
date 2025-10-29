@@ -1,0 +1,17 @@
+Diamond Crest – Changes from Original Design Document
+
+* Intro Scene Removed
+	-I planned to have a short scene where the player crawls out of a hole in the wall to start the game. I didn’t add this because of time and animation setup. The game now starts right in the first level.
+
+* No Cave Echo or Extra Effects
+	-I didn’t include echo sounds or dripping water like I wrote before. I kept the audio simple to focus on the gameplay.
+
+* Enemy Changes
+	-I didn’t add the bats that fly in a U-shape or the ghost enemy that teleports. Instead, I made slimes and skeletons that walk back and forth to keep it simpler.
+
+* Simpler Art and Backgrounds
+	-I used free assets from Unity and itch.io instead of custom pixel art. The tiles and backgrounds don’t perfectly match my original idea, but they still fit the theme.
+
+* Gameplay Adjustments
+	-I added the bubble orb and wind mechanics but didn’t include all the extra effects I planned for them.
+	-The level still follows the climb-to-the-top idea, but I made it shorter and removed some harder obstacles.
